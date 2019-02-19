@@ -37,7 +37,9 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
-extra-deps: []
+extra-deps:
+  - git: https://github.com/less-wrong/cobot-io
+    commit: 967c2fbed875cde8efb7937f856ddb38c8aee190
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
