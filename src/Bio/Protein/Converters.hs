@@ -19,13 +19,14 @@ import           Data.Functor.Identity (Identity (..))
 import           Data.List             (find)
 import           Data.Maybe            (fromMaybe)
 import           Data.Text             (unpack)
+import Debug.Trace
 
 instance FromResidue a => StructureSerializable [Molecule Int (ProteinChain Int a)] where
     serializeModels = fmap (Molecule . assocs . fmap (ProteinChain . fmap fromResidue . chainResidues) . modelChains) . elems
 
 findAtom :: AtomType -> [Atom] -> Atom
 findAtom atomType = fromMaybe (error $ "No " <> show atomType <> " atom in model")
-                  . find ((== atomType) . read @AtomType . unpack . atomName)
+                  . find ((== show atomType) . unpack . atomName)
 
 getCoords :: Array Int Atom -> AtomType -> Identity V3R
 getCoords atoms = pure . atomCoords . flip findAtom (elems atoms)
@@ -44,3 +45,12 @@ instance FromResidue (BBCAT V3R) where
     fromResidue Residue{..} = AminoAcid (Const ()) (Env caAtom (Const . fromThreeSymbols $ resName)) (Const ())
       where
         caAtom = getCoords resAtoms CA
+
+-- V3 23.415 11.348 32.507V3 21.951 11.981 (-31.072)63.599007'Y''Y'
+
+
+
+
+
+
+

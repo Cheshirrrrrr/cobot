@@ -9,9 +9,10 @@ import           Data.Array                    ( Ix (..), listArray )
 import           Control.Lens
 import           Bio.Chain                     as C
 import           Bio.Protein.AminoAcid
+import           GHC.Generics    ( Generic )
 
 newtype ProteinChain i a = ProteinChain { getChain :: Chain i a }
-  deriving (Show, Eq)
+  deriving (Show, Eq, Generic)
 
 instance IsString [AA] where
   fromString = fmap fromS

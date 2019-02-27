@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor   #-}
+{-# LANGUAGE DeriveAnyClass   #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Bio.Protein.AminoAcid.Type where
@@ -7,6 +8,9 @@ import           Bio.Utils.Monomer
 import           Control.Lens
 import           Control.Monad.Identity (Identity)
 import           Data.Text              (unpack)
+import           Control.DeepSeq ( NFData (..) )
+import           GHC.Generics    ( Generic )
+
 -- | Proteinogenic amino acids
 --
 data AA = ALA -- A
@@ -29,7 +33,7 @@ data AA = ALA -- A
         | VAL -- V
         | TRP -- W
         | TYR -- Y
-  deriving (Eq, Ord, Bounded, Enum)
+  deriving (Eq, Ord, Bounded, Enum, Generic, NFData)
 
 -- | Show full names of amino acids
 --
@@ -134,7 +138,7 @@ data AminoAcid nr car cr a = AminoAcid { _n'  :: nr a
                                        , _ca' :: car a
                                        , _c'  :: cr a
                                        }
-  deriving (Show, Eq, Functor)
+  deriving (Show, Eq, Functor, Generic)
 
 -- | Radical structure type
 --
@@ -271,7 +275,7 @@ data Radical a = Alanine          --  no chi
 data Env r a = Env { _atom'       :: a
                    , _environment :: r a
                    }
-  deriving (Show, Eq, Functor)
+  deriving (Show, Eq, Functor, Generic)
 
 -- | Hydrogens envrironment
 --

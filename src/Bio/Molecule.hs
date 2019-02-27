@@ -12,9 +12,11 @@ import           Control.Lens                   ( (^?)
                                                 , (&)
                                                 , (.~)
                                                 )
+import           GHC.Generics    ( Generic )
+
 
 newtype Molecule t c = Molecule { getChains :: [(t, c)] }
-  deriving (Show, Eq)
+  deriving (Show, Eq, Generic)
 
 type instance Index (Molecule t c) = t
 type instance IxValue (Molecule t c) = c
